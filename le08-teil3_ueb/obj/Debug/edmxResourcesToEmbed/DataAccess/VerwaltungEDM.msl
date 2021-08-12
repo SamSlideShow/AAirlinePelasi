@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VerwaltungModelStoreContainer" CdmEntityContainer="VerwaltungEntities">
+    <EntitySetMapping Name="tblFluege">
+      <EntityTypeMapping TypeName="VerwaltungModel.FlugEntity">
+        <MappingFragment StoreEntitySet="tblFluege">
+          <ScalarProperty Name="FluIdPk" ColumnName="FluIdPk" />
+          <ScalarProperty Name="FluPerIdFk" ColumnName="FluPerIdFk" />
+          <ScalarProperty Name="FluFlugziel" ColumnName="FluFlugziel" />
+          <ScalarProperty Name="FluAbflugsort" ColumnName="FluAbflugsort" />
+          <ScalarProperty Name="FluDatum" ColumnName="FluDatum" />
+          <ScalarProperty Name="FluStartzeitpunkt" ColumnName="FluStartzeitpunkt" />
+          <ScalarProperty Name="FluLandung" ColumnName="FluLandung" />
+          <ScalarProperty Name="FluAnzahlPassagiere" ColumnName="FluAnzahlPassagiere" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblPassagiere">
+      <EntityTypeMapping TypeName="VerwaltungModel.PassagierEntity">
+        <MappingFragment StoreEntitySet="tblPassagiere">
+          <ScalarProperty Name="PaIdPk" ColumnName="PaIdPk" />
+          <ScalarProperty Name="PaAnrede" ColumnName="PaAnrede" />
+          <ScalarProperty Name="PaName" ColumnName="PaName" />
+          <ScalarProperty Name="PaVorname" ColumnName="PaVorname" />
+          <ScalarProperty Name="PaEMail" ColumnName="PaEMail" />
+          <ScalarProperty Name="PaFluIDFK" ColumnName="PaFluIDFK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblPersonal">
+      <EntityTypeMapping TypeName="VerwaltungModel.PersonalEntity">
+        <MappingFragment StoreEntitySet="tblPersonal">
+          <ScalarProperty Name="PerIdPk" ColumnName="PerIdPk" />
+          <ScalarProperty Name="PerAnrede" ColumnName="PerAnrede" />
+          <ScalarProperty Name="PerName" ColumnName="PerName" />
+          <ScalarProperty Name="PerVorame" ColumnName="PerVorame" />
+          <ScalarProperty Name="PerEMail" ColumnName="PerEMail" />
+          <ScalarProperty Name="PerMitarbeiter_" ColumnName="PerMitarbeiter?" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

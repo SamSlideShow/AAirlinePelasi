@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VerwaltungModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tblFluege">
+    <Key>
+      <PropertyRef Name="FluIdPk" />
+    </Key>
+    <Property Name="FluIdPk" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FluPerIdFk" Type="int" Nullable="false" />
+    <Property Name="FluFlugziel" Type="varchar" MaxLength="50" />
+    <Property Name="FluAbflugsort" Type="varchar" MaxLength="50" />
+    <Property Name="FluDatum" Type="date" />
+    <Property Name="FluStartzeitpunkt" Type="varchar" MaxLength="50" />
+    <Property Name="FluLandung" Type="varchar" MaxLength="50" />
+    <Property Name="FluAnzahlPassagiere" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tblPassagiere">
+    <Key>
+      <PropertyRef Name="PaIdPk" />
+    </Key>
+    <Property Name="PaIdPk" Type="int" Nullable="false" />
+    <Property Name="PaAnrede" Type="varchar" MaxLength="50" />
+    <Property Name="PaName" Type="varchar" MaxLength="50" />
+    <Property Name="PaVorname" Type="varchar" MaxLength="50" />
+    <Property Name="PaEMail" Type="varchar" MaxLength="50" />
+    <Property Name="PaFluIDFK" Type="int" />
+  </EntityType>
+  <EntityType Name="tblPersonal">
+    <Key>
+      <PropertyRef Name="PerIdPk" />
+    </Key>
+    <Property Name="PerIdPk" Type="int" Nullable="false" />
+    <Property Name="PerAnrede" Type="varchar" MaxLength="50" />
+    <Property Name="PerName" Type="varchar" MaxLength="50" />
+    <Property Name="PerVorame" Type="varchar" MaxLength="50" />
+    <Property Name="PerEMail" Type="varchar" MaxLength="50" />
+    <Property Name="PerMitarbeiter?" Type="bit" />
+  </EntityType>
+  <Association Name="FK_tblPassagiere_tblFluege">
+    <End Role="tblFluege" Type="Self.tblFluege" Multiplicity="0..1" />
+    <End Role="tblPassagiere" Type="Self.tblPassagiere" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblFluege">
+        <PropertyRef Name="FluIdPk" />
+      </Principal>
+      <Dependent Role="tblPassagiere">
+        <PropertyRef Name="PaFluIDFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="VerwaltungModelStoreContainer">
+    <EntitySet Name="tblFluege" EntityType="Self.tblFluege" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPassagiere" EntityType="Self.tblPassagiere" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPersonal" EntityType="Self.tblPersonal" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tblPassagiere_tblFluege" Association="Self.FK_tblPassagiere_tblFluege">
+      <End Role="tblFluege" EntitySet="tblFluege" />
+      <End Role="tblPassagiere" EntitySet="tblPassagiere" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

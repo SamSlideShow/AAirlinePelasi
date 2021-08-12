@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VerwaltungModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="FlugEntity">
+    <Key>
+      <PropertyRef Name="FluIdPk" />
+    </Key>
+    <Property Name="FluIdPk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FluPerIdFk" Type="Int32" Nullable="false" />
+    <Property Name="FluFlugziel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FluAbflugsort" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FluDatum" Type="DateTime" Precision="0" />
+    <Property Name="FluStartzeitpunkt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FluLandung" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FluAnzahlPassagiere" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tblPassagiere" Relationship="Self.FK_tblPassagiere_tblFluege" FromRole="tblFluege" ToRole="tblPassagiere" />
+  </EntityType>
+  <EntityType Name="PassagierEntity">
+    <Key>
+      <PropertyRef Name="PaIdPk" />
+    </Key>
+    <Property Name="PaIdPk" Type="Int32" Nullable="false" />
+    <Property Name="PaAnrede" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PaName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PaVorname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PaEMail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PaFluIDFK" Type="Int32" />
+    <NavigationProperty Name="tblFluege" Relationship="Self.FK_tblPassagiere_tblFluege" FromRole="tblPassagiere" ToRole="tblFluege" />
+  </EntityType>
+  <EntityType Name="PersonalEntity">
+    <Key>
+      <PropertyRef Name="PerIdPk" />
+    </Key>
+    <Property Name="PerIdPk" Type="Int32" Nullable="false" />
+    <Property Name="PerAnrede" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PerVorame" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PerEMail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PerMitarbeiter_" Type="Boolean" />
+  </EntityType>
+  <Association Name="FK_tblPassagiere_tblFluege">
+    <End Role="tblFluege" Type="VerwaltungModel.FlugEntity" Multiplicity="0..1" />
+    <End Role="tblPassagiere" Type="VerwaltungModel.PassagierEntity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblFluege">
+        <PropertyRef Name="FluIdPk" />
+      </Principal>
+      <Dependent Role="tblPassagiere">
+        <PropertyRef Name="PaFluIDFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="VerwaltungEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblFluege" EntityType="VerwaltungModel.FlugEntity" />
+    <EntitySet Name="tblPassagiere" EntityType="VerwaltungModel.PassagierEntity" />
+    <EntitySet Name="tblPersonal" EntityType="VerwaltungModel.PersonalEntity" />
+    <AssociationSet Name="FK_tblPassagiere_tblFluege" Association="Self.FK_tblPassagiere_tblFluege">
+      <End Role="tblFluege" EntitySet="tblFluege" />
+      <End Role="tblPassagiere" EntitySet="tblPassagiere" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

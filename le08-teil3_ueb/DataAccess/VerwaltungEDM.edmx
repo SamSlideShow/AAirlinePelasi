@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="VerwaltungModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblFluege">
+          <Key>
+            <PropertyRef Name="FluIdPk" />
+          </Key>
+          <Property Name="FluIdPk" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FluPerIdFk" Type="int" Nullable="false" />
+          <Property Name="FluFlugziel" Type="varchar" MaxLength="50" />
+          <Property Name="FluAbflugsort" Type="varchar" MaxLength="50" />
+          <Property Name="FluDatum" Type="date" />
+          <Property Name="FluStartzeitpunkt" Type="varchar" MaxLength="50" />
+          <Property Name="FluLandung" Type="varchar" MaxLength="50" />
+          <Property Name="FluAnzahlPassagiere" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblPassagiere">
+          <Key>
+            <PropertyRef Name="PaIdPk" />
+          </Key>
+          <Property Name="PaIdPk" Type="int" Nullable="false" />
+          <Property Name="PaAnrede" Type="varchar" MaxLength="50" />
+          <Property Name="PaName" Type="varchar" MaxLength="50" />
+          <Property Name="PaVorname" Type="varchar" MaxLength="50" />
+          <Property Name="PaEMail" Type="varchar" MaxLength="50" />
+          <Property Name="PaFluIDFK" Type="int" />
+        </EntityType>
+        <EntityType Name="tblPersonal">
+          <Key>
+            <PropertyRef Name="PerIdPk" />
+          </Key>
+          <Property Name="PerIdPk" Type="int" Nullable="false" />
+          <Property Name="PerAnrede" Type="varchar" MaxLength="50" />
+          <Property Name="PerName" Type="varchar" MaxLength="50" />
+          <Property Name="PerVorame" Type="varchar" MaxLength="50" />
+          <Property Name="PerEMail" Type="varchar" MaxLength="50" />
+          <Property Name="PerMitarbeiter?" Type="bit" />
+        </EntityType>
+        <Association Name="FK_tblPassagiere_tblFluege">
+          <End Role="tblFluege" Type="Self.tblFluege" Multiplicity="0..1" />
+          <End Role="tblPassagiere" Type="Self.tblPassagiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblFluege">
+              <PropertyRef Name="FluIdPk" />
+            </Principal>
+            <Dependent Role="tblPassagiere">
+              <PropertyRef Name="PaFluIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VerwaltungModelStoreContainer">
+          <EntitySet Name="tblFluege" EntityType="Self.tblFluege" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPassagiere" EntityType="Self.tblPassagiere" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPersonal" EntityType="Self.tblPersonal" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblPassagiere_tblFluege" Association="Self.FK_tblPassagiere_tblFluege">
+            <End Role="tblFluege" EntitySet="tblFluege" />
+            <End Role="tblPassagiere" EntitySet="tblPassagiere" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VerwaltungModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FlugEntity">
+          <Key>
+            <PropertyRef Name="FluIdPk" />
+          </Key>
+          <Property Name="FluIdPk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FluPerIdFk" Type="Int32" Nullable="false" />
+          <Property Name="FluFlugziel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FluAbflugsort" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FluDatum" Type="DateTime" Precision="0" />
+          <Property Name="FluStartzeitpunkt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FluLandung" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FluAnzahlPassagiere" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblPassagiere" Relationship="Self.FK_tblPassagiere_tblFluege" FromRole="tblFluege" ToRole="tblPassagiere" />
+        </EntityType>
+        <EntityType Name="PassagierEntity">
+          <Key>
+            <PropertyRef Name="PaIdPk" />
+          </Key>
+          <Property Name="PaIdPk" Type="Int32" Nullable="false" />
+          <Property Name="PaAnrede" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaVorname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaEMail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaFluIDFK" Type="Int32" />
+          <NavigationProperty Name="tblFluege" Relationship="Self.FK_tblPassagiere_tblFluege" FromRole="tblPassagiere" ToRole="tblFluege" />
+        </EntityType>
+        <EntityType Name="PersonalEntity">
+          <Key>
+            <PropertyRef Name="PerIdPk" />
+          </Key>
+          <Property Name="PerIdPk" Type="Int32" Nullable="false" />
+          <Property Name="PerAnrede" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PerVorame" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PerEMail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PerMitarbeiter_" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_tblPassagiere_tblFluege">
+          <End Role="tblFluege" Type="VerwaltungModel.FlugEntity" Multiplicity="0..1" />
+          <End Role="tblPassagiere" Type="VerwaltungModel.PassagierEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblFluege">
+              <PropertyRef Name="FluIdPk" />
+            </Principal>
+            <Dependent Role="tblPassagiere">
+              <PropertyRef Name="PaFluIDFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VerwaltungEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblFluege" EntityType="VerwaltungModel.FlugEntity" />
+          <EntitySet Name="tblPassagiere" EntityType="VerwaltungModel.PassagierEntity" />
+          <EntitySet Name="tblPersonal" EntityType="VerwaltungModel.PersonalEntity" />
+          <AssociationSet Name="FK_tblPassagiere_tblFluege" Association="Self.FK_tblPassagiere_tblFluege">
+            <End Role="tblFluege" EntitySet="tblFluege" />
+            <End Role="tblPassagiere" EntitySet="tblPassagiere" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VerwaltungModelStoreContainer" CdmEntityContainer="VerwaltungEntities">
+          <EntitySetMapping Name="tblFluege">
+            <EntityTypeMapping TypeName="VerwaltungModel.FlugEntity">
+              <MappingFragment StoreEntitySet="tblFluege">
+                <ScalarProperty Name="FluIdPk" ColumnName="FluIdPk" />
+                <ScalarProperty Name="FluPerIdFk" ColumnName="FluPerIdFk" />
+                <ScalarProperty Name="FluFlugziel" ColumnName="FluFlugziel" />
+                <ScalarProperty Name="FluAbflugsort" ColumnName="FluAbflugsort" />
+                <ScalarProperty Name="FluDatum" ColumnName="FluDatum" />
+                <ScalarProperty Name="FluStartzeitpunkt" ColumnName="FluStartzeitpunkt" />
+                <ScalarProperty Name="FluLandung" ColumnName="FluLandung" />
+                <ScalarProperty Name="FluAnzahlPassagiere" ColumnName="FluAnzahlPassagiere" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPassagiere">
+            <EntityTypeMapping TypeName="VerwaltungModel.PassagierEntity">
+              <MappingFragment StoreEntitySet="tblPassagiere">
+                <ScalarProperty Name="PaIdPk" ColumnName="PaIdPk" />
+                <ScalarProperty Name="PaAnrede" ColumnName="PaAnrede" />
+                <ScalarProperty Name="PaName" ColumnName="PaName" />
+                <ScalarProperty Name="PaVorname" ColumnName="PaVorname" />
+                <ScalarProperty Name="PaEMail" ColumnName="PaEMail" />
+                <ScalarProperty Name="PaFluIDFK" ColumnName="PaFluIDFK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPersonal">
+            <EntityTypeMapping TypeName="VerwaltungModel.PersonalEntity">
+              <MappingFragment StoreEntitySet="tblPersonal">
+                <ScalarProperty Name="PerIdPk" ColumnName="PerIdPk" />
+                <ScalarProperty Name="PerAnrede" ColumnName="PerAnrede" />
+                <ScalarProperty Name="PerName" ColumnName="PerName" />
+                <ScalarProperty Name="PerVorame" ColumnName="PerVorame" />
+                <ScalarProperty Name="PerEMail" ColumnName="PerEMail" />
+                <ScalarProperty Name="PerMitarbeiter_" ColumnName="PerMitarbeiter?" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
